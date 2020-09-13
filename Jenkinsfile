@@ -1,4 +1,6 @@
 pipeline {
+    def app
+    
     agent {
         node {
            label 'master'
@@ -22,16 +24,18 @@ pipeline {
                 '''
             }
         }
+
         stage('Buildando o projeto com Maven') {
             steps {
                  sh 'mvn clean package'
             }
         }
 
-
         stage('Build image') {
-        app = docker.build("yurekesley/movie-microservice")
-             }
+             steps {
+                 app = docker.build("yurekesley/movie-microservice")
+            }
+         }
 
         stage('Criando imagem') {
             steps {
