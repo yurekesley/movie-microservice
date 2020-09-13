@@ -1,8 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3-alpine'
-            label 'my-defined-label'
+            image ' maven:3.6.0-jdk-8-alpine'
             args  '-v /tmp:/tmp'
         }
     }
@@ -13,10 +12,6 @@ pipeline {
 
     }
 
-    tools {
-        maven 'M3'
-        jdk 'JDK8'
-    }
     stages {
         stage ('Verificando variáveis globais') {
             steps {
@@ -26,9 +21,17 @@ pipeline {
                 '''
             }
         }
-        stage('Buldando projeto com Maven') {
+        stage('Buildando o projeto com Maven') {
+            agent {
+                docker {
+                    reuseNode true
+                    image 'maven:3.6.0-jdk-8-alpine'
+                }
+            }
             steps {
-                echo 'mvn $MVN_OPTS clean package'
+                withMaven(options: [findbugsPublisher(), junitPublisher(ignoreAttachments: false)]) {
+                    sh 'mvn clean $MVN_OPTS package'
+                }
             }
         }
         stage('Test') {
