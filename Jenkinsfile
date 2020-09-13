@@ -25,9 +25,9 @@ pipeline {
                  sh 'mvn clean package'
             }
         }
-        stage('Test') {
+        stage('Criando imagem') {
             steps {
-                echo 'Testing..'
+                echo 'docker info'
             }
         }
         stage('Deploy') {
