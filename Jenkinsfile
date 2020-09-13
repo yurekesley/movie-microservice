@@ -1,6 +1,4 @@
 pipeline {
-    def app
-    
     agent {
         node {
            label 'master'
@@ -33,7 +31,7 @@ pipeline {
 
         stage('Build image') {
              steps {
-                 app = docker.build("yurekesley/movie-microservice")
+                 docker.build("yurekesley/movie-microservice")
             }
          }
 
