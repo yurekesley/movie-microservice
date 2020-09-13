@@ -1,16 +1,10 @@
 pipeline {
     agent {
         node {
-           label 'master'
+           label 'docker'
         }
     }
    
- environment {
-        MAVEN_OPTS= "-XX:+TieredCompilation -XX:TieredStopAtLevel=1 -DdependencyLocationsEnabled=false -Dmaven.repo.local=.m2/repository"
-        MVN_OPTS= "-s .m2/settings.xml --batch-mode -DskipTests -DskipITs"
-    }
-
-
     stages {
         stage ('Verificando variáveis globais') {
             steps {
@@ -22,19 +16,11 @@ pipeline {
                 '''
             }
         }
-
         stage('Buildando o projeto com Maven') {
             steps {
                  sh 'mvn clean package'
             }
         }
-
-        stage('Build image') {
-             steps {
-                 docker.build("yurekesley/movie-microservice")
-            }
-         }
-
         stage('Criando imagem') {
             steps {
                 echo 'docker info'
