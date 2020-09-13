@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Buildando o projeto com Maven') {
             steps {
-                 sh 'mvn clean $MVN_OPTS package'
+                 sh 'mvn clean package'
             }
         }
         stage('Test') {
