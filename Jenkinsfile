@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     environment {
         MAVEN_OPTS= "-XX:+TieredCompilation -XX:TieredStopAtLevel=1 -DdependencyLocationsEnabled=false -Dmaven.repo.local=.m2/repository"
         MVN_OPTS= "-s .m2/settings.xml --batch-mode -DskipTests -DskipITs"
@@ -19,9 +19,7 @@ pipeline {
         }
         stage('Buildando o projeto com Maven') {
             steps {
-                withMaven(options: [findbugsPublisher(), junitPublisher(ignoreAttachments: false)]) {
-                    sh 'mvn clean $MVN_OPTS package'
-                }
+                 sh 'mvn clean $MVN_OPTS package'
             }
         }
         stage('Test') {
