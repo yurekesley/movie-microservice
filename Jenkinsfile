@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image ' maven:3.6.0-jdk-8-alpine'
+            label 'docker' 
             args  '-v /tmp:/tmp'
         }
     }
