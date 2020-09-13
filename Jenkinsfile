@@ -1,8 +1,9 @@
 pipeline {
-    node {
-        label 'docker'
+    agent {
+        node {
+           label 'docker'
+        }
     }
-
     environment {
         MAVEN_OPTS= "-XX:+TieredCompilation -XX:TieredStopAtLevel=1 -DdependencyLocationsEnabled=false -Dmaven.repo.local=.m2/repository"
         MVN_OPTS= "-s .m2/settings.xml --batch-mode -DskipTests -DskipITs"
