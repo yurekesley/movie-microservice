@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Criando imagem') {
             steps {
-                echo 'docker info'
+                sh 'docker info'
             }
         }
         stage('Deploy') {
